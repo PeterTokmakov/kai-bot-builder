@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="#0088CC"/>
+
+  <!-- Telegram-style "paper plane" / bot icon combined -->
+  <!-- Outer ring (bot face suggestion) -->
+  <circle cx="64" cy="60" r="32" fill="none" stroke="white" stroke-width="5"/>
+
+  <!-- Robot antenna -->
+  <line x1="64" y1="28" x2="64" y2="20" stroke="white" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="64" cy="16" r="5" fill="white"/>
+
+  <!-- Robot eyes -->
+  <circle cx="52" cy="56" r="6" fill="white"/>
+  <circle cx="76" cy="56" r="6" fill="white"/>
+  <circle cx="52" cy="56" r="3" fill="#0088CC"/>
+  <circle cx="76" cy="56" r="3" fill="#0088CC"/>
+
+  <!-- Robot mouth / speak wave -->
+  <path d="M48 72 Q64 82 80 72" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- "Builder" gear teeth suggestion (small triangles at bottom) -->
+  <path d="M44 88 L48 96 L56 96 L60 88 Z" fill="white" opacity="0.9"/>
+  <path d="M56 88 L60 96 L68 96 L72 88 Z" fill="white" opacity="0.9"/>
+  <path d="M68 88 L72 96 L80 96 L84 88 Z" fill="white" opacity="0.9"/>
+
+  <!-- Text label -->
+  <text x="64" y="118" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#0088CC" text-anchor="middle">KaiBotBuilder</text>
+</svg>
