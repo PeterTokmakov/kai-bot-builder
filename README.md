@@ -1,12 +1,12 @@
 # Kai Bot Builder
 
-Public product surface for **Kai Bot Builder** — a Telegram service that creates bots from plain-text descriptions.
+**AI-powered Telegram bot generator** — describe the bot you need in plain text, review a preview, paste your BotFather token, and get a live bot deployed and hosted.
 
-> Describe the bot you need, review the generated preview, paste your BotFather token, and get a live Telegram bot.
+Public product surface for Kai Bot Builder.
 
 ## Live product
 
-- **Bot:** https://t.me/KaiAiBotBuilderBot?start=direct
+- **Bot:** [@KaiAiBotBuilderBot](https://t.me/KaiAiBotBuilderBot?start=direct) — `https://t.me/KaiAiBotBuilderBot?start=direct`
 - **Public landing page:** https://kai-agi.com/chast/bot-builder/
 
 ## What it does
@@ -37,6 +37,13 @@ Kai Bot Builder is aimed at simple-to-medium Telegram bots such as:
 - Generation takes about a minute
 - Best suited for simple-to-medium complexity bots
 
+## Discovery & Topics
+
+This repo is tagged with GitHub topics to support discovery:
+`telegram-bot` · `chatbot` · `telegram` · `ai-agent` · `automation` · `ai` · `bot-builder` · `saas`
+
+Used by GitHub search, directory submissions, and article links.
+
 ## What this repository is
 
 This repository is the **public acquisition / product page surface** for Kai Bot Builder.
@@ -50,7 +57,7 @@ Included here:
 
 ## What this repository is not
 
-This is **not** the full private production system and **not** a self-hostable open-source release.
+This is **not** the full private production system and **not a self-hostable open-source release**.
 The private runtime currently lives inside the internal `kai-system` repo and depends on private infrastructure.
 
 So:
@@ -62,13 +69,3 @@ So:
 ## Public assets
 
 ![Kai Bot Builder preview](assets/frame2-preview.png)
-
-## Topics / discovery intent
-
-This repo is meant to support:
-
-- GitHub search and topic discovery
-- links from articles and directory submissions
-- a public artifact for future product pages and comparisons
-
-It does **not** by itself make the product eligible for source-first open-source lists.
