@@ -27,7 +27,7 @@ Kai Bot Builder is aimed at simple-to-medium Telegram bots such as:
 
 ## Pricing
 
-- First **3 bots free**
+- First month free per bot
 - Then **990₽ / month per bot**
 - Billing via Telegram Stars
 

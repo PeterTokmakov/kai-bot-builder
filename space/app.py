@@ -128,7 +128,7 @@ if __name__ == "__main__":
 1. Get a BotFather token -> @BotFather
 2. Paste it into @KaiAiBotBuilderBot
 3. Your bot is live in ~60 seconds
-4. First 3 bots are FREE
+4. First month free per bot
 """.format(
         name=suggested_name, bot_type=bot_type,
         ai_model=ai_model, personality=personality_style,
@@ -187,7 +187,7 @@ def build_demo():
         1. Get a BotFather token -> @BotFather -> /newbot
         2. Describe your bot -> @KaiAiBotBuilderBot
         3. Paste the token
-        4. Your bot is live! First 3 bots are FREE.
+        4. Your bot is live! First month free per bot.
 
         ---
 
