@@ -15,15 +15,396 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://kai-agi.com/chast/bot-builder/" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #08111f;
+        --panel: #0f1b2e;
+        --text: #e8eef9;
+        --muted: #a9b7cf;
+        --accent: #2ea6ff;
+        --accent-2: #74c6ff;
+        --line: rgba(255, 255, 255, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(46, 166, 255, 0.18), transparent 34%),
+          linear-gradient(180deg, #07101c 0%, #08111f 100%);
+        color: var(--text);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .wrap {
+        width: min(1080px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .hero {
+        padding: 56px 0 28px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--accent-2);
+        font-size: 14px;
+        letter-spacing: 0.02em;
+      }
+
+      .brand__dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent), #7c5cff);
+        box-shadow: 0 0 18px rgba(46, 166, 255, 0.7);
+      }
+
+      .social-proof {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        margin-top: 0.5rem;
+      }
+      .social-proof__icon { color: #f59e0b; }
+      .social-proof__count { font-weight: 600; color: var(--text-main); }
+
+      .hero__grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+        gap: 28px;
+        align-items: center;
+        margin-top: 18px;
+      }
+
+      h1 {
+        margin: 0 0 16px;
+        font-size: clamp(38px, 7vw, 64px);
+        line-height: 0.98;
+        letter-spacing: -0.04em;
+      }
+
+      .subhead {
+        margin: 0 0 24px;
+        max-width: 680px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 18px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: transform 0.15s ease, opacity 0.15s ease;
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
+      }
+
+      .button--primary {
+        background: linear-gradient(135deg, var(--accent), #6d77ff);
+        color: white;
+        box-shadow: 0 12px 30px rgba(46, 166, 255, 0.28);
+      }
+
+      .button--secondary {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text);
+      }
+
+      .card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+      }
+
+      .hero-card {
+        padding: 22px;
+      }
+
+      .hero-card__label {
+        display: inline-block;
+        margin-bottom: 14px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(46, 166, 255, 0.14);
+        color: var(--accent-2);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .flow {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .flow li {
+        display: grid;
+        grid-template-columns: 36px minmax(0, 1fr);
+        gap: 12px;
+        align-items: start;
+      }
+
+      .flow__num {
+        display: grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        background: rgba(46, 166, 255, 0.14);
+        color: var(--accent-2);
+        font-weight: 800;
+      }
+
+      .flow strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 15px;
+      }
+
+      .flow span {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .section {
+        padding: 18px 0 0;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .feature {
+        padding: 20px;
+      }
+
+      .feature h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+      }
+
+      .feature p,
+      .feature li {
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .feature ul {
+        margin: 12px 0 0;
+        padding-left: 18px;
+      }
+
+      .pricing {
+        margin-top: 16px;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .pricing__title {
+        margin: 0 0 6px;
+        font-size: 18px;
+      }
+
+      .pricing__text {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .pricing__badge {
+        padding: 10px 14px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--line);
+        font-weight: 700;
+      }
+
+      footer {
+        margin-top: auto;
+        padding: 28px 0 32px;
+      }
+
+      .footer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+      }
+
+      .footer__meta {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .footer__link {
+        color: var(--accent-2);
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      @media (max-width: 860px) {
+        .hero__grid,
+        .grid-3 {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          padding-top: 28px;
+        }
+      }
+    </style>
   </head>
   <body>
-    <h1>Kai Bot Builder</h1>
-    <p>Create Telegram bots from a text description.</p>
-    <ul>
-      <li><a href="https://t.me/KaiAiBotBuilderBot?start=direct">Open @KaiAiBotBuilderBot</a></li>
-      <li><a href="https://kai-agi.com/chast/bot-builder/">Public landing page</a></li>
-    </ul>
-    <p>First month free per bot. Then $10/month per bot.</p>
-    <p>This public repo contains the product-facing surface and landing-page source, not the full private production runtime.</p>
+    <div class="page">
+      <main>
+        <section class="hero">
+          <div class="wrap">
+            <div class="brand"><span class="brand__dot"></span> Kai Bot Builder</div>
+              <div class="social-proof"><span class="social-proof__icon">★</span> <span class="social-proof__count">47</span> bots created</div>
+            <div class="hero__grid">
+              <div>
+                <h1>Create Telegram bots from a text description.</h1>
+                <p class="subhead">
+                  Describe the bot you need in plain language, review the generated preview, paste your
+                  BotFather token, and get a live Telegram bot. Best for lead forms, FAQ bots, booking
+                  flows, and simple notification bots.
+                </p>
+                <div class="actions">
+                  <a class="button button--primary" href="https://t.me/KaiAiBotBuilderBot?start=direct">Create Your Bot in 2 Minutes →</a>
+                  <a class="button button--secondary" href="#pricing">First month free — then $10/mo</a>
+                </div>
+              </div>
+
+              <aside class="card hero-card">
+                <div class="hero-card__label">How it works</div>
+                <ol class="flow">
+                  <li>
+                    <div class="flow__num">1</div>
+                    <div>
+                      <strong>Describe your bot</strong>
+                      <span>Write a plain-text request such as “booking bot for a salon” or “FAQ bot for support”.</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="flow__num">2</div>
+                    <div>
+                      <strong>Review the preview</strong>
+                      <span>The service shows the generated bot type, capabilities, and example behavior before deployment.</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="flow__num">3</div>
+                    <div>
+                      <strong>Deploy with your BotFather token</strong>
+                      <span>After you provide the token, the bot is deployed and hosted for you.</span>
+                    </div>
+                  </li>
+                </ol>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="wrap grid-3">
+            <article class="card feature">
+              <h2>What it is</h2>
+              <p>
+                Kai Bot Builder is an AI-powered Telegram bot generator. It turns natural-language requirements
+                into working bots without a visual builder or a custom dev cycle.
+              </p>
+            </article>
+
+            <article class="card feature">
+              <h2>Good fits</h2>
+              <ul>
+                <li>Lead and contact form bots</li>
+                <li>FAQ and information bots</li>
+                <li>Appointment booking bots</li>
+                <li>Simple reminders and notifications</li>
+              </ul>
+            </article>
+
+            <article class="card feature">
+              <h2>Limits</h2>
+              <ul>
+                <li>You need a free BotFather token</li>
+                <li>Generation takes about a minute</li>
+                <li>Best for simple-to-medium complexity bots</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="wrap">
+            <div class="card pricing" id="pricing">
+              <div>
+                <h2 class="pricing__title">Pricing</h2>
+                <p class="pricing__text">First month free per bot. Then 990₽ per bot per month, hosting included. Billing via Telegram Stars (500 Stars ≈ $10 USD).</p>
+              </div>
+              <div class="pricing__badge">Telegram: @KaiAiBotBuilderBot</div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <div class="wrap footer">
+          <div class="footer__meta">Public landing page for Kai Bot Builder.</div>
+          <a class="footer__link" href="https://thetoolsverse.com/">Listed on ToolsVerse AI Directory</a>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>
