@@ -59,6 +59,7 @@ class CohortWindow:
     end: str | None
     stage_counts: dict[str, int]
     stage_users: dict[str, int]
+    stage_users_unique: dict[str, int]  # distinct user_id per stage (correct funnel metric)
     orphan_text_count: int
     orphan_text_users: int
 
@@ -114,6 +115,19 @@ def funnel_users(conn: sqlite3.Connection, start: str | None = None, end: str | 
     return result
 
 
+def funnel_users_unique(conn: sqlite3.Connection, start: str | None = None, end: str | None = None) -> dict[str, int]:
+    """Return {event: distinct user count} — the correct funnel metric.
+
+    Raw event counts are inflated by repeat presses (e.g. a user pressing
+    LAUNCH 5 times = 5 token_step_opened events). This measures unique
+    users who reached each stage at least once.
+    """
+    where = _where_clause(start, end)
+    sql = f"SELECT event, COUNT(DISTINCT user_id) as n FROM events {where} GROUP BY event"
+    rows = conn.execute(sql).fetchall()
+    return {r["event"]: r["n"] for r in rows}
+
+
 def _where_clause(start: str | None, end: str | None) -> str:
     clauses = []
     if start:
@@ -147,6 +161,7 @@ def build_report(conn: sqlite3.Connection, fix_ts: str, days: int) -> dict:
     for w in windows:
         sc = stage_counts(conn, w["start"], w["end"])
         su = stage_users(conn, w["start"], w["end"])
+        suu = funnel_users_unique(conn, w["start"], w["end"])
         ot_n, ot_u = orphan_counts(conn, w["start"], w["end"])
         cohorts.append(CohortWindow(
             label=w["label"],
@@ -154,6 +169,7 @@ def build_report(conn: sqlite3.Connection, fix_ts: str, days: int) -> dict:
             end=w["end"],
             stage_counts=sc,
             stage_users=su,
+            stage_users_unique=suu,
             orphan_text_count=ot_n,
             orphan_text_users=ot_u,
         ))
@@ -190,17 +206,19 @@ def print_report(report: dict) -> None:
         print(f"  Total events: {total_events}")
         print()
 
-        print(f"  {'Stage':<30} {'Events':>8}  {'Users':>6}  {'%of_start':>10}  {'%of_draft':>10}")
-        print(f"  {'─'*66}")
+        print(f"  {'Stage':<30} {'Events':>8}  {'Users':>6}  {'Uniq.users':>10}  {'%of_start':>10}")
+        print(f"  {'─'*70}")
 
         start_n = sc.get("start_opened", 0)
         draft_n = sc.get("draft_generated", 0)
+        start_u = su.get("start_opened", 0)
 
         for stage in report["stages"]:
             n = sc.get(stage, 0)
             u = su.get(stage, 0)
-            pct_start = (n / start_n * 100) if start_n > 0 else 0
-            pct_draft = (n / draft_n * 100) if draft_n > 0 else 0
+            uu = cohort["stage_users_unique"].get(stage, 0)
+            pct_start = (uu / start_u * 100) if start_u > 0 else 0
+            pct_draft = (uu / uu * 100) if uu > 0 else 0  # noqa: F541
 
             # Highlight funnel-critical stages
             marker = ""
@@ -211,10 +229,10 @@ def print_report(report: dict) -> None:
             elif stage == "deploy_succeeded":
                 marker = " ← success"
 
-            pct_start_s = f"{pct_start:>9.1f}%" if start_n > 0 else "         -"
-            pct_draft_s = f"{pct_draft:>9.1f}%" if draft_n > 0 else "         -"
+            pct_start_s = f"{pct_start:>9.1f}%" if start_u > 0 else "         -"
+            pct_draft_s = f"{pct_draft:>9.1f}%" if uu > 0 else "         -"
 
-            print(f"  {stage:<30} {n:>8}  {u:>6}  {pct_start_s}  {pct_draft_s}{marker}")
+            print(f"  {stage:<30} {n:>8}  {u:>6}  {uu:>10}  {pct_start_s}")
 
         print()
         print(f"  Orphan text events: {cohort['orphan_text_count']}  "
